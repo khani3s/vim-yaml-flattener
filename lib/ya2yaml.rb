@@ -127,7 +127,11 @@ class Ya2YAML
 	end
 
 	def emit_simple_string(str,level)
-		str
+    if $to_nested || str.match(/\.\w+/)
+      str
+    else
+      "'#{str}'"
+    end
 	end
 
 	def emit_block_string(str,level)
@@ -167,7 +171,14 @@ class Ya2YAML
 				ESCAPE_SEQ_LB[$1] + "\\\n" + indent
 			}
 		end
-		'"' + str + '"'
+
+    if str.match(WITH_VARS)
+      '"' + str + '"'
+    elsif str.split(' ').size == 1
+      "'" + str.gsub(/"/, '') + "'"
+    else
+      "'" + str + "'"
+    end
 	end
 
 	def emit_base64_binary(str,level)
@@ -239,7 +250,11 @@ class Ya2YAML
 			ucs_code, = (c.unpack('U') rescue [??])
 			case
 				when ESCAPE_SEQ[c]
-					ESCAPE_SEQ[c]
+					if !str.match(WITH_VARS)
+            c == "'" ? "\"" : c
+          else
+            ESCAPE_SEQ[c]
+          end
 				when is_printable?(ucs_code)
 					c
 				when @options[:escape_as_utf8]
@@ -272,6 +287,7 @@ class Ya2YAML
 			"\x1b" => '\\e',
 			"\""   => '\\"',
 			"\\"   => '\\\\',
+      "'"   =>  '\\"'
 		}
 
 		# non-breaking space
@@ -346,6 +362,9 @@ class Ya2YAML
 		REX_VALUE = /
 			=
 		/x
+
+,   # With I18n vars
+    WITH_VARS = /%{\w+}/
 	end
 
 	include Constants
