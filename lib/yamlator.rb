@@ -36,7 +36,7 @@ class YAMLator
     $to_nested = true
     yamlator = self.class.new(nil, preamble)
     @hash.each do |key, value|
-      yamlator[key] = (value.split(' ').size > 1 ? value : "'#{value}'")
+      yamlator[key] = value.is_a?(String) && value.split(' ').size == 1 ? "\"#{value}\"" : value
     end
     yamlator.to_yaml
   end

@@ -130,7 +130,7 @@ class Ya2YAML
     if $to_nested || str.match(/\.\w+/)
       str
     else
-      "'#{str}'"
+      "\"#{str}\""
     end
   end
 
@@ -172,10 +172,10 @@ class Ya2YAML
       }
     end
 
-    if str.match(WITH_VARS)
+    if str.match(WITH_VARS) || !str.match(/"/)
       '"' + str + '"'
     elsif str.split(' ').size == 1
-      "'" + str.gsub(/"/, '') + "'"
+      '"' + str.gsub(/"/, '') + '"'
     else
       "'" + str + "'"
     end
@@ -363,7 +363,7 @@ class Ya2YAML
       =
     /x
 
-,   # With I18n vars
+    # With I18n vars
     WITH_VARS = /%{\w+}/
   end
 
