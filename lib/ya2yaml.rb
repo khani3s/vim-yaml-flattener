@@ -172,7 +172,7 @@ class Ya2YAML
       }
     end
 
-    if str.match(WITH_VARS) || !str.match(/"/)
+    if str.match(WITH_VARS) || !str.match(/"|\"/)
       '"' + str + '"'
     elsif str.split(' ').size == 1
       '"' + str.gsub(/"/, '') + '"'
@@ -364,7 +364,7 @@ class Ya2YAML
     /x
 
     # With I18n vars
-    WITH_VARS = /%{\w+}/
+    WITH_VARS = /%\{\w+\}/
   end
 
   include Constants
