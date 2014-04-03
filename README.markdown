@@ -19,7 +19,7 @@ Convert them to flat format to search and edit more easily, then back to nested 
 
 Just open a YAML file and hit `<leader>r` (MacVim also supports `⌘r`). Again to go back.
 
-Based on my [YAMLator lib](https://gist.github.com/293581).
+Based on [vim-yaml-flattener](https://github.com/henrik/vim-yaml-flattener).
 
 ## Caveats
 
@@ -30,10 +30,16 @@ Any comments in the beginning of the file are kept, but inline comments are lost
 
 ## Credits and license
 
-By [Henrik Nyh](http://henrik.nyh.se/) under the MIT license:
 
->  Copyright (c) 2011 Henrik Nyh
->
+- [Henrik Nyh](http://henrik.nyh.se/) The creator
+
+- [Gagoar](https://github.com/gagoar/)
+- [Shelvak](https://github.com/Shelvak/)
+
+
+
+MIT license:
+
 >  Permission is hereby granted, free of charge, to any person obtaining a copy
 >  of this software and associated documentation files (the "Software"), to deal
 >  in the Software without restriction, including without limitation the rights

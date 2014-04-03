@@ -174,8 +174,8 @@ class Ya2YAML
 
     if str.match(WITH_VARS) || !str.match(/"|\"/)
       '"' + str + '"'
-    elsif str.split(' ').size == 1
-      '"' + str.gsub(/"/, '') + '"'
+    elsif str.gsub(/\"|"/, '').split(' ').size == 1
+      '"' + str.gsub(/\"|"/, '') + '"'
     else
       "'" + str + "'"
     end
