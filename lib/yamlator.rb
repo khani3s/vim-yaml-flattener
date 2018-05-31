@@ -3,6 +3,7 @@
 # editor extraction tools.
 
 $KCODE = 'u' if RUBY_VERSION < '1.9.0'
+$VERBOSE = nil  # pristine warning ignore
 
 require "yaml"
 require File.join(File.dirname(__FILE__), "ya2yaml")  # Dumps with unescaped UTF-8.

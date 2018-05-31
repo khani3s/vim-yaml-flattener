@@ -12,7 +12,7 @@ endif
 
 " Thanks to https://github.com/hotchpotch/meta_framework-vim/blob/95eb37317eef061cec75c308eae273cc4256e1aa/meta_framework.vim#L23
 let s:libfile = fnamemodify(resolve(expand('<sfile>:p')), ':p:h') . '/../lib/yamlator.rb'
-execute 'rubyfile ' . s:libfile
+silent! execute 'silent! rubyfile ' . s:libfile
 
 ruby << EOF
 
