@@ -27,17 +27,15 @@ class YAMLator
   end
 
   def to_flat_yaml
-    $to_nested = false
     tree = flatten_tree(@hash)
     @hash = tree.inject({}) { |hash, (chain, leaf)| hash.merge(chain.join(".") => leaf) }
     to_yaml
   end
 
   def to_nested_yaml
-    $to_nested = true
     yamlator = self.class.new(nil, preamble)
     @hash.each do |key, value|
-      yamlator[key] = value.is_a?(String) && value.split(' ').size == 1 ? "\"#{value}\"" : value
+      yamlator[key] = value
     end
     yamlator.to_yaml
   end

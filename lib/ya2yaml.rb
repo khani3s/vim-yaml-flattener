@@ -31,7 +31,7 @@ class Ya2YAML
 
   private
 
-  def emit(obj,level)
+  def emit(obj,level, last_value=false)
     case obj.class.to_s
       when 'Array'
         if (obj.length == 0)
@@ -60,13 +60,13 @@ class Ya2YAML
           end
           hash_keys.collect {|k|
             key = emit(k,level + 1)
-            indent + key + ': ' + emit(obj[k],level + 1)
+            indent + key + ': ' + emit(obj[k],level + 1, true)
           }.join('')
         end
       when 'NilClass'
         '~'
       when 'String'
-        emit_string(obj,level)
+        emit_string(obj,level, last_value)
       when 'TrueClass','FalseClass'
         obj.to_s
       when 'Fixnum','Bignum','Float'
@@ -107,12 +107,12 @@ class Ya2YAML
     end
   end
 
-  def emit_string(str,level)
+  def emit_string(str,level, last_value=false)
     (is_string,is_printable,is_one_line,is_one_plain_line) = string_type(str)
     if is_string
       if is_printable
         if is_one_plain_line
-          emit_simple_string(str,level)
+          last_value ? emit_quoted_string(str,level) : emit_simple_string(str,level)
         else
           (is_one_line || str.length < @options[:minimum_block_length]) ?
             emit_quoted_string(str,level) :
@@ -127,11 +127,7 @@ class Ya2YAML
   end
 
   def emit_simple_string(str,level)
-    if $to_nested || str.match(/\.\w+/)
-      str
-    else
-      "\"#{str}\""
-    end
+    str
   end
 
   def emit_block_string(str,level)
