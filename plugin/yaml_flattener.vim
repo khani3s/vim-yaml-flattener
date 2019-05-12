@@ -4,6 +4,12 @@ endif
 
 let g:loaded_YAMLFlattener = 1
 
+" CHRUBY install with --enable-shared
+let s:customdll = $HOME . '/.rubies/ruby-2.6.3/lib/libruby.so'
+if filereadable(s:customdll)
+  let &rubydll = s:customdll
+endif
+
 if !has("ruby")
     echohl ErrorMsg
     echon "Sorry, the YAML Flattener plugin requires a Vim compiled with Ruby support."
