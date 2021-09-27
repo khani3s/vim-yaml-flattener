@@ -69,7 +69,7 @@ class Ya2YAML
         emit_string(obj,level, last_value)
       when 'TrueClass','FalseClass'
         obj.to_s
-      when 'Fixnum','Bignum','Float'
+      when 'Fixnum','Bignum','Float','Integer'
         obj.to_s
       when 'Date'
         obj.to_s
